@@ -38,9 +38,6 @@ const Search = () => {
   return () => clearTimeout(timeoutId);
 }, [searchQuery]);
 
-useEffect(() => {
-    setSearchQuery("batman");
-    }, []);
 
 
 
@@ -93,7 +90,7 @@ return (
           )}
 
           {!loading &&
-            !error &&
+            !error && searchQuery.length > 0 &&
             (
               <Text className="text-xl text-white font-bold">
                 Search Results for{" "}
@@ -101,6 +98,13 @@ return (
               </Text>
             )}
         </>
+      }
+      ListEmptyComponent={
+        !loading && !error ? (
+          <View className="mt-10 px-3">
+            <Text className="text-center text-gray-500">{searchQuery.trim() ? 'No movies found' : 'Search for a Movie'}</Text>
+          </View>
+        ) : null
       }
 
     />
