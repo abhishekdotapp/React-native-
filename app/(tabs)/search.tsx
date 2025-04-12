@@ -6,6 +6,7 @@ import useFetch from "@/services/useFetch";
 import { fetchMovies } from "@/services/api";
 import SearchBar from "@/components/SearchBar";
 import MovieDisplayCard from "@/components/MovieCard";
+import { updateSearchCount } from "@/services/appwrite";
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -30,8 +31,13 @@ const Search = () => {
       reset();
       return;
     }
+
+    updateSearchCount(searchQuery,movies[0])
     const timeoutId = setTimeout( async() => {
       await loadMovies();
+      if(movies?.length > 0 && movies?.[0]){
+        await updateSearchCount(searchQuery,movies[0])
+      }
     }, 500);
   
 
